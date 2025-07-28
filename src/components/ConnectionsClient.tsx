@@ -87,7 +87,8 @@ export default function ConnectionsClient() {
               href="https://www.cruxplanner.ca?utm_source=linktree"
               target="_blank"
               rel="noopener noreferrer"
-              className="animate-pulse block p-4 rounded-lg border-2 border-green-500/30 bg-green-950/20 hover:bg-green-950/40 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-green-500/20"
+              className="animate-pulse block p-4 rounded-lg border-2 border-green-500/30 bg-green-950/20 hover:bg-green-950/40 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-green-500/20 focus:outline-none focus:ring-2 focus:ring-green-400"
+              aria-label="Visit Crux Planner - Course planning made simple."
             >
               <div className="flex items-center space-x-4">
                 <div className="flex-shrink-0 w-8 h-8 flex items-center justify-center">
@@ -129,13 +130,14 @@ export default function ConnectionsClient() {
                   rel="noopener noreferrer"
                   className={`
                     group block p-4 rounded-lg border transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]
-                    border-green-500/30 bg-green-950/20 hover:bg-green-950/40
+                    border-green-500/30 bg-green-950/20 hover:bg-green-950/40 focus:outline-none focus:ring-2 focus:ring-green-400
                   `}
+                  aria-label={`Visit ${link.title} - ${link.description}`}
                 >
                   <div className="flex items-center space-x-4">
                     {/* Icon/Logo */}
                     <div className="flex-shrink-0 w-8 h-8 flex items-center justify-center">
-                      <div className="text-green-400 group-hover:text-green-300 transition-colors">
+                      <div className="text-green-400 group-hover:text-green-300 transition-colors" aria-hidden="true">
                         {link.icon}
                       </div>
                     </div>

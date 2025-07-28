@@ -141,6 +141,7 @@ export default function TerminalText({
         onClick={handleInteractionStart}
         onTouchStart={handleInteractionStart}
         onTouchEnd={handleInteractionEnd}
+        aria-live="polite"
       >
         {processText(displayedText)}
         {showCursor && isTyping && (
