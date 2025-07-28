@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, ReactNode, useRef } from 'react';
+import { useState, useEffect, ReactNode, useRef, Fragment } from 'react';
 
 interface TerminalTextProps {
   children: string;
@@ -39,10 +39,10 @@ export default function TerminalText({
       const processedLine = line.replace(/&nbsp;/g, '\u00A0');
       
       return (
-        <React.Fragment key={lineIndex}>
+        <Fragment key={lineIndex}>
           {processedLine}
           {lineIndex < lineArray.length - 1 && <br />}
-        </React.Fragment>
+        </Fragment>
       );
     });
   };
@@ -171,11 +171,11 @@ export function StaticTerminalText({
       const processedLine = line.replace(/&nbsp;/g, '\u00A0');
       
       return (
-        <React.Fragment key={lineIndex}>
+        <Fragment key={lineIndex}>
           {processedLine}
           {/* Add line break between lines, but not after the last line */}
           {lineIndex < lineArray.length - 1 && <br />}
-        </React.Fragment>
+        </Fragment>
       );
     });
   };
