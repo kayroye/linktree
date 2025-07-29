@@ -62,6 +62,7 @@ export default function Ticker({
         className="whitespace-nowrap inline-block animate-ticker"
         style={{ animationDuration: `${totalDuration}s` }}
         onAnimationIteration={handleIteration}
+        key={currentMessage}
       >
         <span>{tickerContent}</span>
       </div>

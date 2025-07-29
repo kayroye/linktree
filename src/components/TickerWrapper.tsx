@@ -14,8 +14,13 @@ const randomMessages = [
   "Am I cooked? Are we cooked? Time will tell I guess...",
   "Yeah, I built this myself. My mom is so proud of me and says I'm a handsome young man.",
   "I'm doing everything in my power to stay out of 'unc' territory as long as I can.",
-  "Go on, click one of the links. You know you wanna. Stop reading this and click one of the links. Seriously. Just click one.",
+  "Go on, click one of the links. You know you wanna. Stop reading this and click one of the links. Seriously. Just click one. Click.",
   "Wonder why they call it a 'link tree' and not a 'link list'. I mean, look at it. Looks like a list to me. Who do I talk to about this?",
+  "Fantastic Four was genuinely one of the best movies I've seen in a while. Visually stunning, and the music was great too.",
+  "Did you know this ticker will update and show you what I'm listening to right now? It's kinda cool. Took me a while to do though.",
+  "You've been reading this thing for quite a while now. Are we bonding rn?",
+  "This site is 100% gluten-free, keto-friendly, and powered by ur m-",
+  "If you lick your screen right now, you get 20 dollars. Trust me, I coded it in."
 ];
 
 // Simple fetcher for SWR
