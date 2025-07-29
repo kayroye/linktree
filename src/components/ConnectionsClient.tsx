@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import TerminalText from "@/components/TerminalText";
 import Link from "next/link";
 import Image from "next/image";
+import { Music4 } from "lucide-react";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const links = [
   {
@@ -13,6 +15,14 @@ const links = [
       <svg viewBox="0 0 24 24" className="w-6 h-6" fill="currentColor">
         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.94-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" />
       </svg>
+    ),
+  },
+  {
+    title: "Media Player",
+    url: "https://media.kalanroye.com",
+    description: "View my listening history",
+    icon: (
+      <Music4 className="w-6 h-6" />
     ),
   },
   {
@@ -70,7 +80,7 @@ export default function ConnectionsClient() {
 
   return (
     <>
-      <div className="mb-8">
+      <div className="mb-4">
         <TerminalText
           typingSpeed={25}
           showCursor={true}
@@ -80,94 +90,101 @@ export default function ConnectionsClient() {
         </TerminalText>
       </div>
       {showLinks && (
-        <>
-          {/* Crux Planner Link */}
-          <div className="mb-4">
-            <Link
-              href="https://www.cruxplanner.ca?utm_source=linktree"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="animate-pulse block p-4 rounded-lg border-2 border-green-500/30 bg-green-950/20 hover:bg-green-950/40 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-green-500/20 focus:outline-none focus:ring-2 focus:ring-green-400"
-              aria-label="Visit Crux Planner - Course planning made simple."
-            >
-              <div className="flex items-center space-x-4">
-                <div className="flex-shrink-0 w-8 h-8 flex items-center justify-center">
-                  <Image
-                    src="/crux_logo.png"
-                    alt="Crux Planner Logo"
-                    width={32}
-                    height={32}
-                    className="rounded-md"
-                  />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="font-bold text-green-300 group-hover:text-green-200 transition-colors text-base">
-                    Crux Planner
-                    <span className="ml-2 text-xs text-green-500 bg-green-950 px-2 py-1 rounded-full">
-                      Featured
-                    </span>
-                  </div>
-                  <div className="text-sm text-green-500 group-hover:text-green-400 transition-colors">
-                    Course planning made simple.
-                  </div>
-                </div>
-                <div className="text-green-500 group-hover:text-green-300 group-hover:translate-x-1 transition-all">
-                  →
-                </div>
-              </div>
-            </Link>
-          </div>
-          {/* Other Links */}
-          <div className="space-y-4">
-            {links.map((link, index) => (
-              <div
-                key={index}
-                className="transform transition-all duration-500 ease-out translate-y-0 opacity-100"
-              >
+        <div className="flex flex-col flex-1 min-h-0">
+          <ScrollArea className="flex-1 pr-2 min-h-0">
+            <div className="space-y-4 mb-2 p-2">
+              {/* Crux Planner Link */}
+              <div className="mb-4">
                 <Link
-                  href={link.url}
+                  href="https://www.cruxplanner.ca?utm_source=linktree"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`
-                    group block p-4 rounded-lg border transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]
-                    border-green-500/30 bg-green-950/20 hover:bg-green-950/40 focus:outline-none focus:ring-2 focus:ring-green-400
-                  `}
-                  aria-label={`Visit ${link.title} - ${link.description}`}
+                  className="animate-pulse block p-4 rounded-lg border-2 border-green-500/30 bg-green-950/20 hover:bg-green-950/40 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-green-500/20 focus:outline-none focus:ring-2 focus:ring-green-400"
+                  aria-label="Visit Crux Planner - Course planning made simple."
                 >
                   <div className="flex items-center space-x-4">
-                    {/* Icon/Logo */}
                     <div className="flex-shrink-0 w-8 h-8 flex items-center justify-center">
-                      <div className="text-green-400 group-hover:text-green-300 transition-colors" aria-hidden="true">
-                        {link.icon}
-                      </div>
+                      <Image
+                        src="/crux_logo.png"
+                        alt="Crux Planner Logo"
+                        width={32}
+                        height={32}
+                        className="rounded-md"
+                      />
                     </div>
-
-                    {/* Link Content */}
                     <div className="flex-1 min-w-0">
                       <div className="font-bold text-green-300 group-hover:text-green-200 transition-colors text-base">
-                        {link.title}
+                        Crux Planner
+                        <span className="ml-2 text-xs text-green-500 bg-green-950 px-2 py-1 rounded-full">
+                          Featured
+                        </span>
                       </div>
                       <div className="text-sm text-green-500 group-hover:text-green-400 transition-colors">
-                        {link.description}
+                        Course planning made simple.
                       </div>
                     </div>
-
-                    {/* Arrow */}
                     <div className="text-green-500 group-hover:text-green-300 group-hover:translate-x-1 transition-all">
                       →
                     </div>
                   </div>
                 </Link>
               </div>
-            ))}
-          </div>
-          <div className="mt-8 pt-6 border-t border-green-500/20 text-center">
+
+              {/* Other Links */}
+              <div className="space-y-4">
+                {links.map((link, index) => (
+                  <div
+                    key={index}
+                    className="opacity-0 animate-link-in"
+                    style={{ animationDelay: `${index * 120}ms` }}
+                  >
+                    <Link
+                      href={link.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`
+                        group block p-4 rounded-lg border transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]
+                        border-green-500/30 bg-green-950/20 hover:bg-green-950/40 focus:outline-none focus:ring-2 focus:ring-green-400
+                      `}
+                      aria-label={`Visit ${link.title} - ${link.description}`}
+                    >
+                      <div className="flex items-center space-x-4">
+                        {/* Icon/Logo */}
+                        <div className="flex-shrink-0 w-8 h-8 flex items-center justify-center">
+                          <div className="text-green-400 group-hover:text-green-300 transition-colors" aria-hidden="true">
+                            {link.icon}
+                          </div>
+                        </div>
+
+                        {/* Link Content */}
+                        <div className="flex-1 min-w-0">
+                          <div className="font-bold text-green-300 group-hover:text-green-200 transition-colors text-base">
+                            {link.title}
+                          </div>
+                          <div className="text-sm text-green-500 group-hover:text-green-400 transition-colors">
+                            {link.description}
+                          </div>
+                        </div>
+
+                        {/* Arrow */}
+                        <div className="text-green-500 group-hover:text-green-300 group-hover:translate-x-1 transition-all">
+                          →
+                        </div>
+                      </div>
+                    </Link>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </ScrollArea>
+
+          <div className="pt-6 border-t border-green-500/20 text-center">
             <div className="text-sm text-green-600 animate-pulse">
               $ connection_established ✓
             </div>
           </div>
-        </>
-      )}
+        </div>
+       )}
     </>
   );
 }

@@ -180,3 +180,44 @@ body {
   display: flex;
   flex-direction: column;
 }
+
+/* Ticker animation */
+@keyframes ticker {
+  0% {
+    transform: translateX(100vw); /* start just outside right edge */
+  }
+  5% {
+    transform: translateX(100vw); /* pause on the right for 5% of duration */
+  }
+  95% {
+    transform: translateX(-100%); /* move completely past left edge */
+  }
+  100% {
+    transform: translateX(-100%); /* pause on the left for last 5% */
+  }
+}
+
+/* Base animation class – duration is set inline so it can be dynamic */
+.animate-ticker {
+  animation-name: ticker;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@layer utilities {
+  /* slide-up + fade-in used for link list */
+  @keyframes link-in {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-link-in {
+    animation: link-in 0.45s ease-out both;
+  }
+}

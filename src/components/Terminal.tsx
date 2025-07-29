@@ -23,6 +23,7 @@ export default function Terminal({
         ${fullScreen ? 'h-screen w-screen' : 'w-full'}
         ${className}
       `}
+      style={{ height: fullScreen ? undefined : '80vh' }}
     >
       {/* Terminal Header */}
       <div className="px-4 py-2 bg-black border-b border-green-500/30 flex items-center">
@@ -37,7 +38,7 @@ export default function Terminal({
       </div>
       
       {/* Terminal Content */}
-      <div className="flex-1 p-4 overflow-auto">
+      <div className="flex-1 p-4 overflow-visible flex flex-col min-h-0" style={{ minHeight: 0 }}>
         {children}
       </div>
     </div>
