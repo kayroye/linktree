@@ -20,8 +20,7 @@ export default function Ticker({
   pause = 2,
   className = '',
 }: TickerProps) {
-  // Use a deterministic initial index during SSR (0) to avoid hydration mismatches.
-  // Randomize after the component mounts on the client.
+  // Use a deterministic initial index during SSR (0) to avoid hydration mismatches then we randomize after the component mounts on the client
   const [index, setIndex] = useState(0);
 
   // After hydration (client-side), choose a random starting index and whenever the messages array changes

@@ -3,11 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 
-interface FooterProps {
-  isBlog?: boolean;
-}
-
-export default function Footer({ isBlog = false }: FooterProps) {
+export default function Footer() {
   const currentYear = new Date().getFullYear();
   
   return (
@@ -24,21 +20,12 @@ export default function Footer({ isBlog = false }: FooterProps) {
           >
             Main Site
           </Link>
-          {isBlog ? (
-            <Link 
-              href="/" 
-              className="hover:text-green-400 transition-colors"
-            >
-              Main Site
-            </Link>
-          ) : (
-            <Link 
+          <Link 
               href="https://blog.kalanroye.com" 
               className="hover:text-green-400 transition-colors"
             >
               Blog
             </Link>
-          )}
         </div>
       </div>
     </footer>

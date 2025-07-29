@@ -2,12 +2,6 @@ import { Redis } from "@upstash/redis";
 import { Ratelimit, type Duration } from "@upstash/ratelimit";
 import { NextResponse } from "next/server";
 
-/**
- * Shared Upstash Redis instance (same KV used for blog storage).
- * Environment variables expected:
- *   KV_REST_API_URL   – REST endpoint
- *   KV_REST_API_TOKEN – full-access token (needed for INCR/EXPIRE)
- */
 const redis = new Redis({
   url: process.env.KV_REST_API_URL!,
   token: process.env.KV_REST_API_TOKEN!,
@@ -22,16 +16,12 @@ function createLimiter(limit: number = 10, window: Duration = "1 m") {
   return new Ratelimit({
     redis,
     limiter: Ratelimit.slidingWindow(limit, window),
-    prefix: "rl", // avoid colliding with your blog keys
+    prefix: "rl",
   });
 }
 
 // Default limiter: 10 req / minute
 export const defaultLimiter = createLimiter();
-
-// ----------------------------------------------------------------------------
-// Wrapper helper
-// ----------------------------------------------------------------------------
 
 type Handler = (req: Request) => Promise<Response> | Response;
 
