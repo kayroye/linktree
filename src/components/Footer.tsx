@@ -5,12 +5,12 @@ export default function Footer() {
   
   return (
     <footer className="border-t border-green-500/30 py-4 px-6 mt-auto">
-      <div className="flex flex-col gap-2 md:flex-row md:justify-between md:items-center text-green-500/70 font-mono text-xs">
-        <div className="mb-2 md:mb-0">
+      <div className="flex flex-wrap items-center justify-center gap-2 text-center md:justify-between md:text-left text-green-500/70 font-mono text-xs">
+        <div>
           © {currentYear} Kalan Roye. All rights reserved.
         </div>
         
-        <div className="flex items-center gap-3">
+        <div className="flex items-center justify-center gap-3">
           <Link
             href="https://www.kalanroye.com"
             target="_blank"
