@@ -91,7 +91,6 @@ export default function TerminalText({
       }
     };
     // onComplete intentionally omitted — accessed via ref to prevent restart
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [children, typingSpeed, delay, hasCompleted]);
 
   const handleInteractionStart = () => {

@@ -138,7 +138,7 @@ export default function ConnectionsClient() {
                         </span>
                       </div>
                       <div className="mt-1 text-sm text-green-500 group-hover:text-green-400 transition-colors">
-                        └─ About me and what I've done at Western University.
+                        └─ About me and what I&apos;ve done at Western University.
                       </div>
                     </div>
                     <div className="mt-0.5 text-green-500 group-hover:text-green-300 transition-colors">↗</div>
