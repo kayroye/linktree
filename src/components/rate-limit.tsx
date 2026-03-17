@@ -50,13 +50,17 @@ export default function RateLimit() {
                 <span className="mr-2">$</span> cd /home
               </Link>
               <Link
-                href="/projects"
+                href="https://www.kalanroye.com"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="bg-green-500/20 hover:bg-green-500/30 text-green-400 py-2 px-4 rounded border border-green-500/40 transition-colors inline-flex items-center justify-center"
               >
-                <span className="mr-2">$</span> cd /projects
+                <span className="mr-2">$</span> cd /portfolio
               </Link>
               <Link
-                href="/blog"
+                href="https://blog.kalanroye.com"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="bg-green-500/20 hover:bg-green-500/30 text-green-400 py-2 px-4 rounded border border-green-500/40 transition-colors inline-flex items-center justify-center"
               >
                 <span className="mr-2">$</span> cd /blog

@@ -9,7 +9,7 @@ export default function Home() {
       <TickerWrapper speed={15} spacing={50} pause={1} />
       <main className="flex-1 flex items-center justify-center p-4">
         <div className="w-full max-w-lg">
-          <Terminal title="linktree | Kalan Roye" className="shadow-2xl">
+          <Terminal title="linktree | kalanroye.com" className="shadow-2xl">
             <div className="flex flex-col flex-1 min-h-0 space-y-6">
               <ConnectionsClient />
             </div>

@@ -4,7 +4,7 @@ import Ticker from '@/components/Ticker';
 import useSWR from 'swr';
 import { RecentMusic } from '@/app/actions/music';
 import RateLimit from '@/components/rate-limit';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 // Random fallback messages displayed when no recent music is available
 const randomMessages = [
@@ -48,30 +48,24 @@ export default function TickerWrapper({
     revalidateOnFocus: true,
   });
 
-  const now = Math.floor(Date.now() / 1000);
+  const currentTrack = useMemo(() => {
+    const now = Math.floor(Date.now() / 1000);
+    return data?.tracks?.find((track) => {
+      if (!track.scrobbleDate) return false;
+      const scrobbleTime = parseInt(track.scrobbleDate, 10);
+      return now - scrobbleTime < 180; // 3 minutes
+    });
+  }, [data]);
 
-  // Determine if something is currently playing (within last 3 minutes)
-  const currentTrack = data?.tracks?.find((track) => {
-    if (!track.scrobbleDate) return false;
-    const scrobbleTime = parseInt(track.scrobbleDate, 10);
-    return now - scrobbleTime < 180; // 3 minutes
-  });
-
-  // Get user's current date in 'Tuesday, July 29th, 2025' format
-  const getCurrentDateString = () => {
+  const trackMessage = useMemo(() => {
+    if (!currentTrack) return null;
     const now = new Date();
-    const days = [
-      'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'
-    ];
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     const months = [
       'January', 'February', 'March', 'April', 'May', 'June',
-      'July', 'August', 'September', 'October', 'November', 'December'
+      'July', 'August', 'September', 'October', 'November', 'December',
     ];
-    const dayOfWeek = days[now.getDay()];
-    const month = months[now.getMonth()];
     const day = now.getDate();
-    const year = now.getFullYear();
-    // Ordinal suffix
     const getOrdinal = (n: number) => {
       if (n > 3 && n < 21) return 'th';
       switch (n % 10) {
@@ -81,12 +75,9 @@ export default function TickerWrapper({
         default: return 'th';
       }
     };
-    return `${dayOfWeek}, ${month} ${day}${getOrdinal(day)}, ${year}`;
-  };
-
-  const trackMessage = currentTrack
-    ? `♪ Now Playing - ${currentTrack.name} by ${currentTrack.artist} • View more at media.kalanroye.com • ${getCurrentDateString()}`
-    : null;
+    const dateStr = `${days[now.getDay()]}, ${months[now.getMonth()]} ${day}${getOrdinal(day)}, ${now.getFullYear()}`;
+    return `♪ Now Playing - ${currentTrack.name} by ${currentTrack.artist} • View more at media.kalanroye.com • ${dateStr}`;
+  }, [currentTrack]);
 
   const [messages, setMessages] = useState<string[]>(
     trackMessage ? [trackMessage] : randomMessages

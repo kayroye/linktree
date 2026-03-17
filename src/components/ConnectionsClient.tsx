@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import TerminalText from "@/components/TerminalText";
 import Link from "next/link";
 import Image from "next/image";
@@ -7,6 +7,20 @@ import { Music4 } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 const links = [
+  {
+    title: "Crux Planner",
+    url: "https://www.cruxplanner.ca?utm_source=linktree",
+    description: "Course planning made simple.",
+    icon: (
+      <Image
+        src="/crux_logo.png"
+        alt="Crux Planner Logo"
+        width={32}
+        height={32}
+        className="rounded-md"
+      />
+    ),
+  },
   {
     title: "Personal Website",
     url: "https://www.kalanroye.com",
@@ -78,109 +92,99 @@ const links = [
 export default function ConnectionsClient() {
   const [showLinks, setShowLinks] = useState(false);
 
+  const handleTypingComplete = useCallback(() => {
+    setTimeout(() => setShowLinks(true), 500);
+  }, []);
+
   return (
     <>
       <div className="mb-4">
         <TerminalText
           typingSpeed={25}
           showCursor={true}
-          onComplete={() => setTimeout(() => setShowLinks(true), 500)}
+          onComplete={handleTypingComplete}
         >
           {`kalan@linktree:~$ ls -la links/`}
         </TerminalText>
       </div>
       {showLinks && (
         <div className="flex flex-col flex-1 min-h-0">
-          <ScrollArea className="flex-1 pr-2 min-h-0">
-            <div className="space-y-4 mb-2 p-2">
-              {/* Crux Planner Link */}
-              <div className="mb-4">
+          <ScrollArea className="flex-1 min-h-0 pr-1">
+            <div className="space-y-3 mb-3 px-1 py-2">
+              {/* Featured Western Link */}
+              <div className="opacity-0 animate-link-in" style={{ animationDelay: "0ms" }}>
                 <Link
-                  href="https://www.cruxplanner.ca?utm_source=linktree"
+                  href="https://welcome.uwo.ca/what-is-western-like/student-stories/kalan-roye.html"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="animate-pulse block p-4 rounded-lg border-2 border-green-500/30 bg-green-950/20 hover:bg-green-950/40 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-green-500/20 focus:outline-none focus:ring-2 focus:ring-green-400"
-                  aria-label="Visit Crux Planner - Course planning made simple."
+                  className="group block rounded-md border border-green-500/45 bg-green-950/18 px-4 py-3 transition-all duration-200 hover:border-green-400/70 hover:bg-green-950/30 focus:outline-none focus:ring-2 focus:ring-green-400/50"
+                  aria-label="Visit my Western University story page."
                 >
-                  <div className="flex items-center space-x-4">
-                    <div className="flex-shrink-0 w-8 h-8 flex items-center justify-center">
+                  <div className="flex items-start gap-3">
+                    <div className="mt-0.5 flex-shrink-0 w-8 h-8 flex items-center justify-center">
                       <Image
-                        src="/crux_logo.png"
-                        alt="Crux Planner Logo"
+                        src="/western.png"
+                        alt="Western University logo"
                         width={32}
                         height={32}
                         className="rounded-md"
                       />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="font-bold text-green-300 group-hover:text-green-200 transition-colors text-base">
-                        Crux Planner
-                        <span className="ml-2 text-xs text-green-500 bg-green-950 px-2 py-1 rounded-full">
+                      <div className="font-semibold text-green-300 group-hover:text-green-200 transition-colors text-[15px] leading-tight">
+                        $ open western-uwo-story
+                        <span className="ml-2 text-[10px] text-green-500 bg-green-950 px-2 py-1 rounded-full animate-pulse align-middle tracking-wide uppercase">
                           Featured
                         </span>
                       </div>
-                      <div className="text-sm text-green-500 group-hover:text-green-400 transition-colors">
-                        Course planning made simple.
+                      <div className="mt-1 text-sm text-green-500 group-hover:text-green-400 transition-colors">
+                        └─ About me and what I've done at Western University.
                       </div>
                     </div>
-                    <div className="text-green-500 group-hover:text-green-300 group-hover:translate-x-1 transition-all">
-                      →
-                    </div>
+                    <div className="mt-0.5 text-green-500 group-hover:text-green-300 transition-colors">↗</div>
                   </div>
                 </Link>
               </div>
 
               {/* Other Links */}
-              <div className="space-y-4">
-                {links.map((link, index) => (
-                  <div
-                    key={index}
-                    className="opacity-0 animate-link-in"
-                    style={{ animationDelay: `${index * 120}ms` }}
+              {links.map((link, index) => (
+                <div
+                  key={link.title}
+                  className="opacity-0 animate-link-in"
+                  style={{ animationDelay: `${(index + 1) * 120}ms` }}
+                >
+                  <Link
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group block rounded-md border border-green-500/35 bg-green-950/14 px-4 py-3 transition-all duration-200 hover:border-green-400/60 hover:bg-green-950/26 focus:outline-none focus:ring-2 focus:ring-green-400/50"
+                    aria-label={`Visit ${link.title} - ${link.description}`}
                   >
-                    <Link
-                      href={link.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={`
-                        group block p-4 rounded-lg border transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]
-                        border-green-500/30 bg-green-950/20 hover:bg-green-950/40 focus:outline-none focus:ring-2 focus:ring-green-400
-                      `}
-                      aria-label={`Visit ${link.title} - ${link.description}`}
-                    >
-                      <div className="flex items-center space-x-4">
-                        {/* Icon/Logo */}
-                        <div className="flex-shrink-0 w-8 h-8 flex items-center justify-center">
-                          <div className="text-green-400 group-hover:text-green-300 transition-colors" aria-hidden="true">
-                            {link.icon}
-                          </div>
-                        </div>
-
-                        {/* Link Content */}
-                        <div className="flex-1 min-w-0">
-                          <div className="font-bold text-green-300 group-hover:text-green-200 transition-colors text-base">
-                            {link.title}
-                          </div>
-                          <div className="text-sm text-green-500 group-hover:text-green-400 transition-colors">
-                            {link.description}
-                          </div>
-                        </div>
-
-                        {/* Arrow */}
-                        <div className="text-green-500 group-hover:text-green-300 group-hover:translate-x-1 transition-all">
-                          →
+                    <div className="flex items-start gap-3">
+                      <div className="mt-0.5 flex-shrink-0 w-8 h-8 flex items-center justify-center">
+                        <div className="text-green-400 group-hover:text-green-300 transition-colors" aria-hidden="true">
+                          {link.icon}
                         </div>
                       </div>
-                    </Link>
-                  </div>
-                ))}
-              </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="font-semibold text-green-300 group-hover:text-green-200 transition-colors text-[15px] leading-tight">
+                          $ open {link.title.toLowerCase().replace(/\s+/g, "-")}
+                        </div>
+                        <div className="mt-1 text-sm text-green-500 group-hover:text-green-400 transition-colors">
+                          └─ {link.description}
+                        </div>
+                      </div>
+                      <div className="mt-0.5 text-green-500 group-hover:text-green-300 transition-colors">↗</div>
+                    </div>
+                  </Link>
+                </div>
+              ))}
             </div>
           </ScrollArea>
 
-          <div className="pt-6 border-t border-green-500/20 text-center">
-            <div className="text-sm text-green-600 animate-pulse">
-              $ connection_established ✓
+          <div className="mt-2 pt-5 border-t border-green-500/20 text-center">
+            <div className="text-xs text-green-700 tracking-widest uppercase">
+              $ connection_established ✓<span className="animate-blink ml-0.5">_</span>
             </div>
           </div>
         </div>

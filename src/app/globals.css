@@ -125,8 +125,8 @@
 
 /* Custom Scrollbar Styles */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
@@ -134,18 +134,18 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(156, 163, 175, 0.5); /* Gray color with transparency */
-  border-radius: 4px;
+  background: rgba(74, 222, 128, 0.25);
+  border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(156, 163, 175, 0.7); /* Slightly more opaque on hover */
+  background: rgba(74, 222, 128, 0.45);
 }
 
 /* Firefox scrollbar styles */
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgba(156, 163, 175, 0.5) black;
+  scrollbar-color: rgba(74, 222, 128, 0.25) black;
 }
 
 /* Prevent overscrolling */
@@ -219,5 +219,35 @@ body {
 
   .animate-link-in {
     animation: link-in 0.45s ease-out both;
+  }
+
+  /* Subtle CRT scanline overlay */
+  .terminal-scanlines {
+    position: relative;
+  }
+
+  .terminal-scanlines::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 3px,
+      rgba(0, 255, 65, 0.018) 3px,
+      rgba(0, 255, 65, 0.018) 4px
+    );
+    z-index: 10;
+  }
+
+  /* Slow blinking cursor for static indicators */
+  @keyframes blink {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0; }
+  }
+
+  .animate-blink {
+    animation: blink 1.1s step-end infinite;
   }
 }

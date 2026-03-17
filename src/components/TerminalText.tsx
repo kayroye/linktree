@@ -24,20 +24,19 @@ export default function TerminalText({
   const [displayedText, setDisplayedText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [hasCompleted, setHasCompleted] = useState(false);
-  const [isInteracting, setIsInteracting] = useState(false);
   const hiddenTextRef = useRef<HTMLDivElement>(null);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const currentSpeedRef = useRef(typingSpeed);
   const wordIndexRef = useRef(0);
   const currentTextRef = useRef('');
-  
-  // Process text function to handle newlines and &nbsp; tags
+  // Keep onComplete in a ref so the interval closure never goes stale
+  const onCompleteRef = useRef(onComplete);
+  useEffect(() => { onCompleteRef.current = onComplete; });
+
   const processText = (text: string) => {
     const lines = text.split('\n');
-    
     return lines.map((line, lineIndex, lineArray) => {
       const processedLine = line.replace(/&nbsp;/g, '\u00A0');
-      
       return (
         <Fragment key={lineIndex}>
           {processedLine}
@@ -47,8 +46,7 @@ export default function TerminalText({
     });
   };
 
-  // Helper to start typing interval, only uses refs and arguments
-  function runTypingInterval(words: string[], onComplete?: () => void) {
+  function runTypingInterval(words: string[]) {
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
     }
@@ -64,30 +62,27 @@ export default function TerminalText({
         }
         setIsTyping(false);
         setHasCompleted(true);
-        if (onComplete) onComplete();
+        onCompleteRef.current?.();
       }
     }, currentSpeedRef.current * 2);
   }
 
   useEffect(() => {
-    // Skip if already completed
     if (hasCompleted) return;
-    
-    // Reset when content changes
+
     setDisplayedText('');
     currentSpeedRef.current = typingSpeed;
     wordIndexRef.current = 0;
     currentTextRef.current = '';
-    
-    // Delay before starting typing effect
+
     const timeout = setTimeout(() => {
       setIsTyping(true);
       const words = children.match(/(\S+|\s+)/g) || [];
       wordIndexRef.current = 0;
       currentTextRef.current = '';
-      runTypingInterval(words, onComplete);
+      runTypingInterval(words);
     }, delay);
-    
+
     return () => {
       clearTimeout(timeout);
       if (intervalRef.current) {
@@ -95,31 +90,28 @@ export default function TerminalText({
         intervalRef.current = null;
       }
     };
-  }, [children, typingSpeed, delay, onComplete, hasCompleted]);
+    // onComplete intentionally omitted — accessed via ref to prevent restart
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [children, typingSpeed, delay, hasCompleted]);
 
-  // Handle interaction events
   const handleInteractionStart = () => {
     if (!hasCompleted && isTyping) {
-      setIsInteracting(true);
       currentSpeedRef.current = fastTypingSpeed;
       const words = children.match(/(\S+|\s+)/g) || [];
-      runTypingInterval(words, onComplete);
+      runTypingInterval(words);
     }
   };
 
   const handleInteractionEnd = () => {
     if (!hasCompleted && isTyping) {
-      setIsInteracting(false);
       currentSpeedRef.current = typingSpeed;
       const words = children.match(/(\S+|\s+)/g) || [];
-      runTypingInterval(words, onComplete);
+      runTypingInterval(words);
     }
   };
 
-  
   return (
     <div className="relative">
-      {/* Hidden element to calculate full height */}
       <div 
         ref={hiddenTextRef}
         className={`font-mono ${className} opacity-0 absolute pointer-events-none whitespace-pre-wrap`}
@@ -127,15 +119,9 @@ export default function TerminalText({
       >
         {processText(children)}
       </div>
-      
-      {/* Visible typing element */}
       <div 
         className={`font-mono ${className} select-none`}
-        style={
-          isTyping
-            ? { minHeight: hiddenTextRef.current?.offsetHeight || 'auto' }
-            : undefined
-        }
+        style={isTyping ? { minHeight: hiddenTextRef.current?.offsetHeight || 'auto' } : undefined}
         onMouseEnter={handleInteractionStart}
         onMouseLeave={handleInteractionEnd}
         onClick={handleInteractionStart}
@@ -145,7 +131,7 @@ export default function TerminalText({
       >
         {processText(displayedText)}
         {showCursor && isTyping && (
-          <span className={`inline-block w-2 h-4 bg-green-400 ml-0.5 ${isInteracting ? 'animate-pulse' : 'animate-pulse'}`}></span>
+          <span className="inline-block w-2 h-4 bg-green-400 ml-0.5 animate-pulse" />
         )}
       </div>
     </div>

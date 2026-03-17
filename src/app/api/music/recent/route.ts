@@ -7,7 +7,9 @@ export const GET = withRateLimit(async () => {
   if ("error" in recentMusic) {
     return NextResponse.json({ error: recentMusic.error }, { status: 500 });
   }
-  return NextResponse.json(recentMusic);
+  return NextResponse.json(recentMusic, {
+    headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=30' },
+  });
 }, {
   limit: 15,
   window: "1 m",
